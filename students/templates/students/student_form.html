@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ title }}</h1>
+
+<div class="panel">
+  <!-- enctype is REQUIRED because of the photo field.
+       Remove it and the photo silently will not save. -->
+  <form method="post" enctype="multipart/form-data" novalidate>
+
+    <!-- Remove this line and Django will refuse the form with a 403 error -->
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="row">
+      {% for field in form %}
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}
+            <div class="field-error">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="btn btn-primary">{{ button_label }}</button>
+    <a href="{% url 'student_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

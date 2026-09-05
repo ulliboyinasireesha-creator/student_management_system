@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Confirm delete{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <h1 class="page-title">Delete this student?</h1>
+  <p class="mb-4"><strong>{{ student }}</strong> will be removed permanently.</p>
+
+  <!-- The delete only happens when this form is submitted (POST) -->
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'student_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}
